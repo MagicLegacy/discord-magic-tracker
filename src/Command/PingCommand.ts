@@ -13,11 +13,11 @@ export class PingCommand extends AbstractCommand
     {
         super();
 
-        this.commands = [
+        this.helpCommands = [
             '!ping',
         ];
 
-        this.parameters = [];
+        this.helpParameters = [];
     }
 
     /**

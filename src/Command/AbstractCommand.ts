@@ -6,11 +6,11 @@ import {CommandInterface} from "./CommandInterface";
  */
 export abstract class AbstractCommand implements CommandInterface
 {
-    /** @property {string[]} commands */
-    protected commands: Array<string> = [];
+    /** @property {string[]} helpCommands */
+    protected helpCommands: Array<string> = [];
 
-    /** @property {string[]} parameters */
-    protected parameters: Array<string> = [];
+    /** @property {string[]} helpParameters */
+    protected helpParameters: Array<string> = [];
 
     /**
      * @param {Message} message
@@ -24,7 +24,7 @@ export abstract class AbstractCommand implements CommandInterface
      */
     public support(input: string): boolean
     {
-        return (this.commands.includes(this.getCommand(input)));
+        return (this.helpCommands.includes(this.getCommand(input)));
     }
 
     /**
@@ -36,11 +36,11 @@ export abstract class AbstractCommand implements CommandInterface
         let help: Array<string> = [];
 
         help.push('> **Command Help: **');
-        for(let index = 0; index < this.commands.length; index++) {
-            if (this.parameters.length > 0) {
-                help.push('> `' + this.commands[index] + ' ' + this.parameters.join(' ') + '`');
+        for(let index = 0; index < this.helpCommands.length; index++) {
+            if (this.helpParameters.length > 0) {
+                help.push('> `' + this.helpCommands[index] + ' ' + this.helpParameters.join(' ') + '`');
             } else {
-                help.push('> `' + this.commands[index] + '`');
+                help.push('> `' + this.helpCommands[index] + '`');
             }
         }
 
