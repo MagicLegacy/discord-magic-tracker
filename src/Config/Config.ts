@@ -11,7 +11,7 @@ export class Config
     private readonly path: string = '';
 
     /** @property {any} configs */
-    private configs: any = {};
+    private readonly configs: Map<string,any>;
 
     /**
      * Class constructor
@@ -20,9 +20,10 @@ export class Config
      */
     public constructor(path: string)
     {
-        this.path = path;
+        this.path    = path;
+        this.configs = new Map<string,any>();
 
-        this.load(this.getFiles());
+        this.load();
     }
 
     /**
@@ -30,25 +31,31 @@ export class Config
      */
     public get(name: string, key: string, defaultValue: any = null): any | string | null
     {
-        if (this.configs[name] === undefined) {
+        if (!this.configs.has(name)) {
             return defaultValue;
         }
 
-        if (this.configs[name][key] === undefined) {
+        let config: any = this.configs.get(name);
+
+        if (config[key] === undefined) {
             return defaultValue;
         }
 
-        return this.configs[name][key];
+        return config[key];
     }
 
     /**
-     * @param {Array<string>} files
      * @return void
      */
-    private load(files: Array<string>): void
+    private load(): void
     {
+        let files: Array<string> = this.getFiles();
+
         files.forEach(filename => {
-            this.configs[filename.substr(0, filename.length - 5)] = yaml.safeLoad(fs.readFileSync(this.path + '/'  + filename, 'utf8'));
+            this.configs.set(
+                filename.substr(0, filename.length - 5),
+                yaml.safeLoad(fs.readFileSync(this.path + '/'  + filename, 'utf8'))
+            );
         });
     }
 

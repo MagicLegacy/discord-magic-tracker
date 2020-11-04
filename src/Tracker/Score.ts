@@ -33,17 +33,17 @@ export class Score
     /**
      * return {string}
      */
-    public getWinRatePercent(): string
+    public getWinRate(): string
     {
-        let total: number = this.nbVictory + this.nbDefeat;
+        let nbMatches: number = this.getNbMatches();
 
-        if (total === 0) {
+        if (nbMatches === 0) {
             return '-';
         }
 
-        let percent: number = (this.nbVictory / total) * 100;
+        let percent: number = (this.nbVictory / nbMatches) * 100;
 
-        return percent.toPrecision(1) + '%';
+        return percent.toPrecision(4) + '%';
     }
 
     /**
@@ -60,5 +60,20 @@ export class Score
     public getNbDefeat(): number
     {
         return this.nbDefeat;
+    }
+
+    /**
+     * @return {number}
+     */
+    public getNbMatches(): number
+    {
+        return (this.nbVictory + this.nbDefeat);
+    }
+
+    public toString(): string
+    {
+        return '> **Résultat cumulés** : `' + this.getNbVictory() + '-' + this.getNbDefeat() +
+            '`, soit un winrate de `' + this.getWinRate() + '` sur `' + this.getNbMatches() + '` parties'
+        ;
     }
 }

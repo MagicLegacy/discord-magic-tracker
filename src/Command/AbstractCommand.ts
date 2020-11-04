@@ -54,13 +54,13 @@ export abstract class AbstractCommand implements CommandInterface
      */
     public needHelp(input: string): boolean
     {
-        let parameters: Array<string> = this.getParameters(input);
+        let commandArguments: Array<string> = this.getArguments(input);
 
-        if (parameters.length === 0) {
+        if (commandArguments.length === 0) {
             return true;
         }
 
-        return (parameters[0] === 'help' || parameters[0] === 'aide');
+        return (commandArguments[0] === 'help' || commandArguments[0] === 'aide');
     }
 
     /**
@@ -92,7 +92,7 @@ export abstract class AbstractCommand implements CommandInterface
      * @param {string} input
      * @return {string[]}
      */
-    protected getParameters(input: string): Array<string>
+    protected getArguments(input: string): Array<string>
     {
         let inputs: Array<string> = this.parseInput(input);
 
@@ -109,14 +109,14 @@ export abstract class AbstractCommand implements CommandInterface
     protected debug(input: string): void
     {
         let command: string = this.getCommand(input);
-        let parameters: Array<string> = this.getParameters(input);
-        let parametersString: string = '';
+        let commandArguments: Array<string> = this.getArguments(input);
+        let commandArgumentsString: string = '';
 
-        for (let index = 0; index < parameters.length; index++) {
-            parametersString += ' p:' + parameters[index];
+        for (let index = 0; index < commandArguments.length; index++) {
+            commandArgumentsString += ' p:' + commandArguments[index];
         }
 
-        console.log('command: ' + command + parametersString);
+        console.log('command: ' + command + commandArgumentsString);
     }
 
     /**
